@@ -1,6 +1,7 @@
 package editor;
 
 import javax.swing.*;
+import java.awt.BorderLayout;
 
 public class TextEditor extends JFrame {
 
@@ -11,12 +12,18 @@ public class TextEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 300);
         setLocationRelativeTo(null);
-        setLayout(null);
+        setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         JTextArea textArea = new JTextArea();
+        textArea.setLineWrap(true);
         textArea.setName("TextArea");
-        textArea.setBounds(10, 10, 260, 240);
-        add(textArea);
+
+        panel.add(textArea);
+        add(panel, BorderLayout.CENTER);
 
         setVisible(true);
     }
