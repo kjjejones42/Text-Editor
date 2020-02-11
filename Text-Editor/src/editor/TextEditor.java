@@ -2,6 +2,7 @@ package editor;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 public class TextEditor extends JFrame {
 
@@ -22,6 +23,7 @@ public class TextEditor extends JFrame {
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setName("TextArea");
+        textArea.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
         panel.add(textArea);
         add(panel, BorderLayout.CENTER);
