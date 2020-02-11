@@ -20,6 +20,7 @@ public class TextEditor extends JFrame {
 
         JTextArea textArea = new JTextArea();
         textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
         textArea.setName("TextArea");
 
         panel.add(textArea);
