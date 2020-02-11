@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <projectDescription>
-  <name>texteditor</name>
+  <name>TextEditor</name>
   <comment/>
-  <projects>&#xD;
+  <projects>
     </projects>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
-      <arguments>&#xD;
+      <arguments>
             </arguments>
     </buildCommand>
   </buildSpec>
