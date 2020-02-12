@@ -9,6 +9,8 @@ public class TextEditor extends JFrame {
 
     static final long serialVersionUID = 1;
 
+    static final boolean WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
+
     private static String readLineByLineJava8(File filePath) {
         StringBuilder contentBuilder = new StringBuilder();
         try {
@@ -30,7 +32,7 @@ public class TextEditor extends JFrame {
             ex.printStackTrace();
         }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(600, 480);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -58,18 +60,19 @@ public class TextEditor extends JFrame {
         center.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JButton button = new JButton("Choose File");
 
-        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-            FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open File", FileDialog.LOAD);
-            button.addActionListener(l -> {
+        if (WINDOWS) {
+            FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
+            button.addActionListener(e -> {
                 chooser.setVisible(true);
-                textArea.setText(readLineByLineJava8(new File(chooser.getDirectory() + chooser.getFile())));
+                String fileContent = readLineByLineJava8(new File(chooser.getDirectory() + chooser.getFile()));
+                textArea.setText(fileContent);
             });
-
         } else {
             JFileChooser chooser = new JFileChooser();
-            button.addActionListener(l -> {
+            button.addActionListener(e -> {
                 if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-                    textArea.setText(readLineByLineJava8(chooser.getSelectedFile()));
+                    String fileContent = readLineByLineJava8(chooser.getSelectedFile());                 
+                    textArea.setText(fileContent);
                 }
             });
 
