@@ -11,16 +11,10 @@ public class TextEditor extends JFrame {
 
     private static String readLineByLineJava8(File filePath) {
         StringBuilder contentBuilder = new StringBuilder();
-        byte[] barr = new byte[1];
         try {
             byte[] bytes = Files.readAllBytes(filePath.toPath());
             for (byte b : bytes) {
-                try {
-                    barr[0] = b;
-                    contentBuilder.append(new String(barr));
-                } catch (Exception e) {
-                    contentBuilder.append(" ");
-                }
+                contentBuilder.append((char) (b & 0xFF));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +47,7 @@ public class TextEditor extends JFrame {
 
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
+        textArea.setEditable(false);
         JScrollPane pane = new JScrollPane(textAreaContainer);
         center.add(pane);
         add(center, BorderLayout.CENTER);
@@ -62,12 +57,24 @@ public class TextEditor extends JFrame {
         JPanel top = new JPanel();
         center.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JButton button = new JButton("Choose File");
-        JFileChooser chooser = new JFileChooser();
-        button.addActionListener(l -> {
-            if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-                textArea.setText(readLineByLineJava8(chooser.getSelectedFile()));
-            }
-        });
+
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open File", FileDialog.LOAD);
+            button.addActionListener(l -> {
+                chooser.setVisible(true);
+                textArea.setText(readLineByLineJava8(new File(chooser.getDirectory() + chooser.getFile())));
+            });
+
+        } else {
+            JFileChooser chooser = new JFileChooser();
+            button.addActionListener(l -> {
+                if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
+                    textArea.setText(readLineByLineJava8(chooser.getSelectedFile()));
+                }
+            });
+
+        }
+
         top.add(button);
         add(top, BorderLayout.NORTH);
 
