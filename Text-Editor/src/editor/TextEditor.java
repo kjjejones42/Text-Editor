@@ -10,7 +10,7 @@ public class TextEditor extends JFrame {
     static final boolean WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
 
     public TextEditor() {
-        super("Swing Example");
+        super("Text Editor");
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -21,10 +21,11 @@ public class TextEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
 
+        setLayout(new BorderLayout());
         add(new CenterPanel(), BorderLayout.CENTER);
         add(new TopPanel(), BorderLayout.NORTH);
+
         setVisible(true);
     }
 

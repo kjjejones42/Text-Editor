@@ -43,8 +43,20 @@ class TopPanel extends JPanel {
             });
 
         }
+
+        JTextField filenameField = new JTextField("Filename", 20);
+        filenameField.setName("FilenameField");
+
+        JButton saveButton = new JButton("Save");
+        saveButton.setName("SaveButton");
+
+        JButton loadButton = new JButton("Load");
+        loadButton.setName("LoadButton");
         
         top.add(button);
+        top.add(filenameField);
+        top.add(saveButton);
+        top.add(loadButton);
         add(top);
     }
 
