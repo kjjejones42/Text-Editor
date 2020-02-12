@@ -7,6 +7,8 @@ import java.nio.file.*;
 
 class TopPanel extends JPanel {
 
+    static final long serialVersionUID = 1;
+
     private static String readLineByLineJava8(File filePath) {
         StringBuilder contentBuilder = new StringBuilder();
         try {
@@ -21,7 +23,6 @@ class TopPanel extends JPanel {
     }
 
     TopPanel() {
-        
         JPanel top = new JPanel();
         JButton button = new JButton("Choose File");
 
@@ -36,14 +37,15 @@ class TopPanel extends JPanel {
             JFileChooser chooser = new JFileChooser();
             button.addActionListener(e -> {
                 if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-                    String fileContent = readLineByLineJava8(chooser.getSelectedFile());                 
+                    String fileContent = readLineByLineJava8(chooser.getSelectedFile());
                     CenterPanel.setText(fileContent);
                 }
             });
 
         }
+        
         top.add(button);
         add(top);
     }
-    
+
 }
