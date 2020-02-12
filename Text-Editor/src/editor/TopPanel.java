@@ -4,22 +4,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
 
 class TopPanel extends JPanel {
 
     static final long serialVersionUID = 1;
 
-    private static String readLineByLineJava8(File filePath) {
-        StringBuilder contentBuilder = new StringBuilder();
+    private String fileName;
+
+    private static String loadFile(File filePath) {
+        if (!filePath.exists()){
+            return "";
+        }
         try {
-            byte[] bytes = Files.readAllBytes(filePath.toPath());
-            for (byte b : bytes) {
-                contentBuilder.append((char) (b & 0xFF));
-            }
+            byte[] bytes = Files.readAllBytes(filePath.toPath());            
+            return new String(bytes, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private static void saveFile(String fileContents, String file) {
+        try {
+            byte[] bytes = fileContents.getBytes(StandardCharsets.UTF_8);
+            Path path = Paths.get(file);
+            Files.write(path, bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return contentBuilder.toString();
+    }
+
+    String getFileName(){
+        return fileName;
+    }
+
+    void setFileName(String fileName){
+        this.fileName = fileName;
     }
 
     TopPanel() {
@@ -30,28 +51,34 @@ class TopPanel extends JPanel {
             FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
             button.addActionListener(e -> {
                 chooser.setVisible(true);
-                String fileContent = readLineByLineJava8(new File(chooser.getDirectory() + chooser.getFile()));
+                String fileContent = loadFile(new File(chooser.getDirectory() + chooser.getFile()));
                 CenterPanel.setText(fileContent);
             });
         } else {
             JFileChooser chooser = new JFileChooser();
             button.addActionListener(e -> {
                 if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-                    String fileContent = readLineByLineJava8(chooser.getSelectedFile());
+                    String fileContent = loadFile(chooser.getSelectedFile());
                     CenterPanel.setText(fileContent);
                 }
             });
 
         }
 
-        JTextField filenameField = new JTextField("Filename", 20);
+        JTextField filenameField = new JTextField("", 20);
         filenameField.setName("FilenameField");
 
         JButton saveButton = new JButton("Save");
         saveButton.setName("SaveButton");
+        saveButton.addActionListener(e -> {
+            saveFile(CenterPanel.getText(), filenameField.getText());           
+        });
 
         JButton loadButton = new JButton("Load");
         loadButton.setName("LoadButton");
+        loadButton.addActionListener(e -> {
+            CenterPanel.setText(loadFile(new File(filenameField.getText())));           
+        });
         
         top.add(button);
         top.add(filenameField);

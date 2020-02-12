@@ -11,7 +11,6 @@ public class TextEditor extends JFrame {
 
     public TextEditor() {
         super("Text Editor");
-
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {

@@ -13,6 +13,10 @@ class CenterPanel extends JPanel {
         textArea.setText(text);
     }
 
+    static String getText(){
+        return textArea.getText();
+    }
+
     CenterPanel() {
 
         setLayout(new BorderLayout());
@@ -27,7 +31,6 @@ class CenterPanel extends JPanel {
         textArea.setName("TextArea");
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setEditable(false);
         textArea.setName("TextArea");
         textAreaContainer.add(textArea, BorderLayout.CENTER);
 
