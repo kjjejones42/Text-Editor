@@ -17,7 +17,7 @@ class CenterPanel extends JPanel {
         return textArea.getText();
     }
 
-    CenterPanel() {
+    CenterPanel(TextEditor editor) {
 
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

@@ -3,56 +3,23 @@ package editor;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.nio.file.*;
-import java.nio.charset.StandardCharsets;
 
 class TopPanel extends JPanel {
 
     static final long serialVersionUID = 1;
 
-    private String fileName;
     private JTextField filenameField;
     private final TextEditor editor;
 
-    private void loadFile(File file) {
-        try {
-            String fileContent;
-            if (!file.exists()) {
-                fileContent = "File does not exist.";
-            } else {
-                byte[] bytes = Files.readAllBytes(file.toPath());
-                fileContent = new String(bytes, StandardCharsets.UTF_8);
-            }
-            filenameField.setText(file.getAbsolutePath());
-            editor.setText(fileContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveFile(String fileContents, String file) {
-        try {
-            byte[] bytes = fileContents.getBytes(StandardCharsets.UTF_8);
-            Path path = Paths.get(file);
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    String getFileName() {
-        return fileName;
-    }
-
-    void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    void processSelectButton(File file) {
+    private void processSelectButton(File file) {
         if (!file.exists()) {
             return;
         }
-        loadFile(file);
+        editor.loadFile(file);
+    }
+
+    void setFilenameField(String text){
+        filenameField.setText(text);
     }
 
     TopPanel(TextEditor editor) {
@@ -82,13 +49,13 @@ class TopPanel extends JPanel {
         JButton saveButton = new JButton("Save");
         saveButton.setName("SaveButton");
         saveButton.addActionListener(e -> {
-            saveFile(editor.getText(), filenameField.getText());
+            editor.saveFile(filenameField.getText());
         });
 
         JButton loadButton = new JButton("Load");
         loadButton.setName("LoadButton");
         loadButton.addActionListener(e -> {
-            loadFile(new File(filenameField.getText()));
+            editor.loadFile(new File(filenameField.getText()));
         });
 
 
