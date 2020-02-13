@@ -56,7 +56,7 @@ class TopPanel extends JPanel {
     }
 
     TopPanel(TextEditor editor) {
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
         this.editor = editor;
 
         JButton selectButton = new JButton("Choose File");
@@ -91,22 +91,19 @@ class TopPanel extends JPanel {
             loadFile(new File(filenameField.getText()));
         });
 
-        JPanel top = new JPanel();
-        top.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 0, 5);
         c.fill = GridBagConstraints.BOTH;
 
-        top.add(selectButton, c);
+        add(selectButton, c);
         c.weightx = 1.0;
-        top.add(filenameField, c);
+        add(filenameField, c);
         c.weightx = 0.0;
-        top.add(saveButton, c);
-        top.add(loadButton, c);
+        add(saveButton, c);
+        add(loadButton, c);
 
-        top.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        add(top, BorderLayout.CENTER);
+        setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
     }
 
 }
