@@ -11,13 +11,15 @@ class TopPanel extends JPanel {
     static final long serialVersionUID = 1;
 
     private String fileName;
+    private JTextField filenameField;
+    private final TextEditor editor;
 
-    private String loadFile(File filePath) {
-        if (!filePath.exists()){
-            return "";
+    private String loadFile(File file) {
+        if (!file.exists()){
+            return "File does not exist.";
         }
         try {
-            byte[] bytes = Files.readAllBytes(filePath.toPath());            
+            byte[] bytes = Files.readAllBytes(file.toPath());            
             return new String(bytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,29 +45,38 @@ class TopPanel extends JPanel {
         this.fileName = fileName;
     }
 
+    void processSelectButton(File file){
+        if (!file.exists()){
+            return;
+        }
+        String fileContent = loadFile(file);
+        filenameField.setText(file.getAbsolutePath());
+        editor.setText(fileContent);
+
+    }
+
     TopPanel(TextEditor editor) {
-        JPanel top = new JPanel();
-        JButton button = new JButton("Choose File");
+        setLayout(new BorderLayout());
+        this.editor = editor;
+
+        JButton selectButton = new JButton("Choose File");
 
         if (TextEditor.WINDOWS) {
             FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
-            button.addActionListener(e -> {
+            selectButton.addActionListener(e -> {
                 chooser.setVisible(true);
-                String fileContent = loadFile(new File(chooser.getDirectory() + chooser.getFile()));
-                editor.setText(fileContent);
+                processSelectButton(new File(chooser.getDirectory() + chooser.getFile()));
             });
         } else {
             JFileChooser chooser = new JFileChooser();
-            button.addActionListener(e -> {
-                if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
-                    String fileContent = loadFile(chooser.getSelectedFile());
-                    editor.setText(fileContent);
+            selectButton.addActionListener(e -> {
+                if (chooser.showOpenDialog(selectButton) == JFileChooser.APPROVE_OPTION) {
+                    processSelectButton(chooser.getSelectedFile());
                 }
             });
-
         }
 
-        JTextField filenameField = new JTextField("", 20);
+        filenameField = new JTextField(""); 
         filenameField.setName("FilenameField");
 
         JButton saveButton = new JButton("Save");
@@ -79,12 +90,23 @@ class TopPanel extends JPanel {
         loadButton.addActionListener(e -> {
             editor.setText(loadFile(new File(filenameField.getText())));           
         });
+
+        JPanel top = new JPanel();
+        top.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(5,5,0,5);
+        c.fill = GridBagConstraints.BOTH ;
+
+        top.add(selectButton, c);
+        c.weightx = 1.0;        
+        top.add(filenameField, c);        
+        c.weightx = 0.0;
+        top.add(saveButton, c);
+        top.add(loadButton, c);
         
-        top.add(button);
-        top.add(filenameField);
-        top.add(saveButton);
-        top.add(loadButton);
-        add(top);
+        top.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        add(top, BorderLayout.CENTER);
     }
 
 }

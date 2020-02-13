@@ -37,6 +37,7 @@ public class TextEditor extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         setVisible(true);
+        centerPanel.requestFocusInWindow();
     }
 
     public static void main(final String[] args) {
