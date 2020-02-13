@@ -9,6 +9,17 @@ public class TextEditor extends JFrame {
 
     static final boolean WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
 
+    CenterPanel centerPanel = new CenterPanel();
+    TopPanel topPanel = new TopPanel(this);
+
+    void setText(String text){
+        centerPanel.setText(text);
+    }
+
+    String getText(){
+        return centerPanel.getText();
+    }
+
     public TextEditor() {
         super("Text Editor");
         try {
@@ -22,8 +33,8 @@ public class TextEditor extends JFrame {
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
-        add(new CenterPanel(), BorderLayout.CENTER);
-        add(new TopPanel(), BorderLayout.NORTH);
+        add(centerPanel, BorderLayout.CENTER);
+        add(topPanel, BorderLayout.NORTH);
 
         setVisible(true);
     }

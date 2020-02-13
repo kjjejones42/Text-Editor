@@ -12,7 +12,7 @@ class TopPanel extends JPanel {
 
     private String fileName;
 
-    private static String loadFile(File filePath) {
+    private String loadFile(File filePath) {
         if (!filePath.exists()){
             return "";
         }
@@ -25,7 +25,7 @@ class TopPanel extends JPanel {
         }
     }
 
-    private static void saveFile(String fileContents, String file) {
+    private void saveFile(String fileContents, String file) {
         try {
             byte[] bytes = fileContents.getBytes(StandardCharsets.UTF_8);
             Path path = Paths.get(file);
@@ -43,7 +43,7 @@ class TopPanel extends JPanel {
         this.fileName = fileName;
     }
 
-    TopPanel() {
+    TopPanel(TextEditor editor) {
         JPanel top = new JPanel();
         JButton button = new JButton("Choose File");
 
@@ -52,14 +52,14 @@ class TopPanel extends JPanel {
             button.addActionListener(e -> {
                 chooser.setVisible(true);
                 String fileContent = loadFile(new File(chooser.getDirectory() + chooser.getFile()));
-                CenterPanel.setText(fileContent);
+                editor.setText(fileContent);
             });
         } else {
             JFileChooser chooser = new JFileChooser();
             button.addActionListener(e -> {
                 if (chooser.showOpenDialog(button) == JFileChooser.APPROVE_OPTION) {
                     String fileContent = loadFile(chooser.getSelectedFile());
-                    CenterPanel.setText(fileContent);
+                    editor.setText(fileContent);
                 }
             });
 
@@ -71,13 +71,13 @@ class TopPanel extends JPanel {
         JButton saveButton = new JButton("Save");
         saveButton.setName("SaveButton");
         saveButton.addActionListener(e -> {
-            saveFile(CenterPanel.getText(), filenameField.getText());           
+            saveFile(editor.getText(), filenameField.getText());           
         });
 
         JButton loadButton = new JButton("Load");
         loadButton.setName("LoadButton");
         loadButton.addActionListener(e -> {
-            CenterPanel.setText(loadFile(new File(filenameField.getText())));           
+            editor.setText(loadFile(new File(filenameField.getText())));           
         });
         
         top.add(button);

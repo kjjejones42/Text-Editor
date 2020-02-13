@@ -7,13 +7,13 @@ class CenterPanel extends JPanel {
 
     static final long serialVersionUID = 1;
 
-    static JTextArea textArea;
+    JTextArea textArea;
 
-    static void setText(String text) {
+    void setText(String text) {
         textArea.setText(text);
     }
 
-    static String getText(){
+    String getText(){
         return textArea.getText();
     }
 
