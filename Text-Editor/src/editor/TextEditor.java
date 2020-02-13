@@ -12,11 +12,11 @@ public class TextEditor extends JFrame {
     CenterPanel centerPanel = new CenterPanel();
     TopPanel topPanel = new TopPanel(this);
 
-    void setText(String text){
+    void setText(String text) {
         centerPanel.setText(text);
     }
 
-    String getText(){
+    String getText() {
         return centerPanel.getText();
     }
 

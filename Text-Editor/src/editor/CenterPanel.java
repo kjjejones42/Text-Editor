@@ -13,7 +13,7 @@ class CenterPanel extends JPanel {
         textArea.setText(text);
     }
 
-    String getText(){
+    String getText() {
         return textArea.getText();
     }
 

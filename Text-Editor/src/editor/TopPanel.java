@@ -14,16 +14,19 @@ class TopPanel extends JPanel {
     private JTextField filenameField;
     private final TextEditor editor;
 
-    private String loadFile(File file) {
-        if (!file.exists()){
-            return "File does not exist.";
-        }
+    private void loadFile(File file) {
         try {
-            byte[] bytes = Files.readAllBytes(file.toPath());            
-            return new String(bytes, StandardCharsets.UTF_8);
+            String fileContent;
+            if (!file.exists()) {
+                fileContent = "File does not exist.";
+            } else {
+                byte[] bytes = Files.readAllBytes(file.toPath());
+                fileContent = new String(bytes, StandardCharsets.UTF_8);
+            }
+            filenameField.setText(file.getAbsolutePath());
+            editor.setText(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
-            return "";
         }
     }
 
@@ -37,22 +40,19 @@ class TopPanel extends JPanel {
         }
     }
 
-    String getFileName(){
+    String getFileName() {
         return fileName;
     }
 
-    void setFileName(String fileName){
+    void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
-    void processSelectButton(File file){
-        if (!file.exists()){
+    void processSelectButton(File file) {
+        if (!file.exists()) {
             return;
         }
-        String fileContent = loadFile(file);
-        filenameField.setText(file.getAbsolutePath());
-        editor.setText(fileContent);
-
+        loadFile(file);
     }
 
     TopPanel(TextEditor editor) {
@@ -76,35 +76,35 @@ class TopPanel extends JPanel {
             });
         }
 
-        filenameField = new JTextField(""); 
+        filenameField = new JTextField("");
         filenameField.setName("FilenameField");
 
         JButton saveButton = new JButton("Save");
         saveButton.setName("SaveButton");
         saveButton.addActionListener(e -> {
-            saveFile(editor.getText(), filenameField.getText());           
+            saveFile(editor.getText(), filenameField.getText());
         });
 
         JButton loadButton = new JButton("Load");
         loadButton.setName("LoadButton");
         loadButton.addActionListener(e -> {
-            editor.setText(loadFile(new File(filenameField.getText())));           
+            loadFile(new File(filenameField.getText()));
         });
 
         JPanel top = new JPanel();
         top.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5,5,0,5);
-        c.fill = GridBagConstraints.BOTH ;
+        c.insets = new Insets(5, 5, 0, 5);
+        c.fill = GridBagConstraints.BOTH;
 
         top.add(selectButton, c);
-        c.weightx = 1.0;        
-        top.add(filenameField, c);        
+        c.weightx = 1.0;
+        top.add(filenameField, c);
         c.weightx = 0.0;
         top.add(saveButton, c);
         top.add(loadButton, c);
-        
+
         top.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         add(top, BorderLayout.CENTER);
     }
