@@ -53,10 +53,26 @@ public class TextEditor extends JFrame {
         setSize(600, 480);
         setLocationRelativeTo(null);
 
-        setLayout(new BorderLayout());
-        add(centerPanel, BorderLayout.CENTER);
-        add(topPanel, BorderLayout.NORTH);
+        setLayout(new GridBagLayout());     
 
+        JMenuBar menu = new JMenuBar();
+        menu.add(new JMenu("File"));
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        c.gridy = 0;        
+        
+        add(menu, c);
+        
+        c.gridy = 1;       
+        add(topPanel, c);
+        
+        c.gridy = 2;
+        c.weighty = 1.0;        
+        add(centerPanel, c);
+        
         setVisible(true);
         centerPanel.requestFocusInWindow();
     }
