@@ -66,12 +66,12 @@ public class TextEditor extends JFrame {
         try {
             String fileContent;
             if (!file.exists()) {
-                fileContent = "File does not exist.";
+                fileContent = "";
             } else {
                 byte[] bytes = Files.readAllBytes(file.toPath());
                 fileContent = new String(bytes, StandardCharsets.UTF_8);
             }
-            topPanel.setFilenameField(file.getAbsolutePath());
+//            topPanel.setFilenameField(file.getAbsolutePath());
             centerPanel.setText(fileContent);
         } catch (IOException e) {
             e.printStackTrace();

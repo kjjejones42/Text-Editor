@@ -31,7 +31,6 @@ class CenterPanel extends JPanel {
         textArea.setName("TextArea");
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setName("TextArea");
         textAreaContainer.add(textArea, BorderLayout.CENTER);
 
         JScrollPane scrollPane = new JScrollPane(textAreaContainer);
