@@ -2,6 +2,7 @@ package editor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,45 @@ public class TextEditor extends JFrame {
 
     CenterPanel centerPanel = new CenterPanel(this);
     TopPanel topPanel = new TopPanel(this);
+
+    private void addMenu(){
+
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        menuBar.add(fileMenu);
+
+        JMenu newMenuItem = new JMenu("New");
+        fileMenu.add(newMenuItem);
+
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(e -> System.exit(0));        
+                
+        fileMenu.addSeparator();
+        fileMenu.add(exitMenuItem);
+        
+        newMenuItem.add(new JMenuItem("Text File"));
+        newMenuItem.add(new JMenuItem("Image File"));
+        newMenuItem.add(new JMenuItem("Folder"));
+    }
+
+    private void addChildComponents(){             
+        setLayout(new GridBagLayout()); 
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0; 
+        c.gridy = 1;       
+        add(topPanel, c);
+        
+        c.gridy = 2;
+        c.weighty = 1.0;        
+        add(centerPanel, c);
+
+    }
     
     void loadFile(File file) {
         try {
@@ -53,26 +93,9 @@ public class TextEditor extends JFrame {
         setSize(600, 480);
         setLocationRelativeTo(null);
 
-        setLayout(new GridBagLayout());     
+        addMenu();
+        addChildComponents();
 
-        JMenuBar menu = new JMenuBar();
-        menu.add(new JMenu("File"));
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.weightx = 1.0;
-        c.gridy = 0;        
-        
-        add(menu, c);
-        
-        c.gridy = 1;       
-        add(topPanel, c);
-        
-        c.gridy = 2;
-        c.weighty = 1.0;        
-        add(centerPanel, c);
-        
         setVisible(true);
         centerPanel.requestFocusInWindow();
     }
