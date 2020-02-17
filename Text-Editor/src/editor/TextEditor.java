@@ -22,23 +22,29 @@ public class TextEditor extends JFrame {
         setJMenuBar(menuBar);
 
         JMenu fileMenu = new JMenu("File");
+        fileMenu.setName("MenuFile");
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
 
-        JMenu newMenuItem = new JMenu("New");
-        fileMenu.add(newMenuItem);
+        JMenuItem loadMenuItem = new JMenuItem("Load");
+        loadMenuItem.setName("MenuLoad");
+        loadMenuItem.addActionListener(e -> {}); 
+        fileMenu.add(loadMenuItem);
+        
+        JMenuItem saveMenuItem = new JMenuItem("Save");
+        saveMenuItem.setName("MenuSave");
+        saveMenuItem.addActionListener(e -> {}); 
+        fileMenu.add(saveMenuItem);
+
+        fileMenu.addSeparator();
 
         JMenuItem exitMenuItem = new JMenuItem("Exit");
-        exitMenuItem.addActionListener(e -> System.exit(0));        
-                
-        fileMenu.addSeparator();
+        exitMenuItem.setName("MenuExit");
+        exitMenuItem.addActionListener(e -> dispose());                
         fileMenu.add(exitMenuItem);
         
-        newMenuItem.add(new JMenuItem("Text File"));
-        newMenuItem.add(new JMenuItem("Image File"));
-        newMenuItem.add(new JMenuItem("Folder"));
     }
-
+    
     private void addChildComponents(){             
         setLayout(new GridBagLayout()); 
 
