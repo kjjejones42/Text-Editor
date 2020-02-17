@@ -15,6 +15,7 @@ public class TextEditor extends JFrame {
 
     CenterPanel centerPanel = new CenterPanel(this);
     TopPanel topPanel = new TopPanel(this);
+    File file;
 
     private void addMenu(){
 
@@ -28,12 +29,12 @@ public class TextEditor extends JFrame {
 
         JMenuItem loadMenuItem = new JMenuItem("Load");
         loadMenuItem.setName("MenuLoad");
-        loadMenuItem.addActionListener(e -> {}); 
+        loadMenuItem.addActionListener(e -> loadFile()); 
         fileMenu.add(loadMenuItem);
         
         JMenuItem saveMenuItem = new JMenuItem("Save");
         saveMenuItem.setName("MenuSave");
-        saveMenuItem.addActionListener(e -> {}); 
+        saveMenuItem.addActionListener(e -> saveFile()); 
         fileMenu.add(saveMenuItem);
 
         fileMenu.addSeparator();
@@ -44,7 +45,7 @@ public class TextEditor extends JFrame {
         fileMenu.add(exitMenuItem);
         
     }
-    
+
     private void addChildComponents(){             
         setLayout(new GridBagLayout()); 
 
@@ -61,7 +62,7 @@ public class TextEditor extends JFrame {
 
     }
     
-    void loadFile(File file) {
+    void loadFile() {
         try {
             String fileContent;
             if (!file.exists()) {
@@ -77,14 +78,22 @@ public class TextEditor extends JFrame {
         }
     }
 
-    void saveFile(String file) {
+    void saveFile() {
         try {
-            byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
-            Path path = Paths.get(file);
+            byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);            
+            Path path = file.toPath();
             Files.write(path, bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    File getFileObj(){
+        return this.file;
+    }
+
+    void setFileObj(File fileName){
+        this.file = fileName;
     }
 
     public TextEditor() {

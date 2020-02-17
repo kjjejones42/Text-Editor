@@ -2,6 +2,7 @@ package editor;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.event.*;
 import java.io.*;
 
 class TopPanel extends JPanel {
@@ -15,7 +16,8 @@ class TopPanel extends JPanel {
         if (!file.exists()) {
             return;
         }
-        editor.loadFile(file);
+        editor.setFileObj(file);
+        editor.loadFile();
     }
 
     void setFilenameField(String text){
@@ -46,16 +48,34 @@ class TopPanel extends JPanel {
         filenameField = new JTextField("");
         filenameField.setName("FilenameField");
 
+        filenameField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+              process();
+            }
+            public void removeUpdate(DocumentEvent e) {
+              process();
+            }
+            public void insertUpdate(DocumentEvent e) {
+              process();
+            }          
+            public void process() {
+                editor.setFileObj(new File(filenameField.getText()));
+            }
+          });
+
+
         JButton saveButton = new JButton("Save");
         saveButton.setName("SaveButton");
         saveButton.addActionListener(e -> {
-            editor.saveFile(filenameField.getText());
+            editor.setFileObj(new File(filenameField.getText()));
+            editor.saveFile();
         });
 
         JButton loadButton = new JButton("Load");
         loadButton.setName("LoadButton");
         loadButton.addActionListener(e -> {
-            editor.loadFile(new File(filenameField.getText()));
+            editor.setFileObj(new File(filenameField.getText()));
+            editor.loadFile();
         });
 
 
