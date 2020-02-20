@@ -2,7 +2,6 @@ package editor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
@@ -16,38 +15,6 @@ public class TextEditor extends JFrame {
     CenterPanel centerPanel = new CenterPanel(this);
     TopPanel topPanel = new TopPanel(this);
     File file;
-
-    private void addMenu(){
-
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-
-        JMenu fileMenu = new JMenu("File");
-        fileMenu.setName("MenuFile");
-        fileMenu.setMnemonic(KeyEvent.VK_F);
-        menuBar.add(fileMenu);
-
-        JMenuItem loadMenuItem = new JMenuItem("Load");
-        loadMenuItem.setName("MenuLoad");
-        loadMenuItem.setIcon(UIManager.getIcon("FileView.directoryIcon"));
-        loadMenuItem.addActionListener(e -> loadFile()); 
-        fileMenu.add(loadMenuItem);
-        
-        JMenuItem saveMenuItem = new JMenuItem("Save");
-        saveMenuItem.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
-        saveMenuItem.setName("MenuSave");
-        saveMenuItem.addActionListener(e -> saveFile()); 
-        fileMenu.add(saveMenuItem);
-
-        fileMenu.addSeparator();
-
-
-        JMenuItem exitMenuItem = new JMenuItem("Exit");        
-        exitMenuItem.setName("MenuExit");
-        exitMenuItem.addActionListener(e -> dispose());                
-        fileMenu.add(exitMenuItem);
-        
-    }
 
     private void addChildComponents(){             
         setLayout(new GridBagLayout()); 
@@ -110,8 +77,8 @@ public class TextEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
-
-        addMenu();
+        
+        setJMenuBar(new MenuBar(this));
         addChildComponents();
 
         setVisible(true);
