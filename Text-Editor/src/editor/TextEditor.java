@@ -18,38 +18,38 @@ public class TextEditor extends JFrame {
     final MenuBar menuBar;
     File file;
 
-    private void addChildComponents(){        
-                
+    private void addChildComponents() {
+
         setJMenuBar(menuBar);
 
-        setLayout(new GridBagLayout()); 
+        setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.weightx = 1.0; 
-        c.gridy = 1;       
+        c.weightx = 1.0;
+        c.gridy = 1;
         add(topPanel, c);
-        
+
         c.gridy = 2;
-        c.weighty = 1.0;        
+        c.weighty = 1.0;
         add(centerPanel, c);
 
     }
-    
+
     void loadFile() {
-        try {
-            String fileContent;
-            if (!file.exists()) {
-                fileContent = "";
-            } else {
+        String fileContent;
+        if (file == null || !file.exists()) {
+            fileContent = "";
+        } else {
+            try {
                 byte[] bytes = Files.readAllBytes(file.toPath());
                 fileContent = new String(bytes, StandardCharsets.UTF_8);
+                // topPanel.setFilenameField(file.getAbsolutePath());
+                centerPanel.setText(fileContent);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-//            topPanel.setFilenameField(file.getAbsolutePath());
-            centerPanel.setText(fileContent);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -58,7 +58,7 @@ public class TextEditor extends JFrame {
             return;
         }
         try {
-            byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);            
+            byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
             Path path = file.toPath();
             Files.write(path, bytes);
         } catch (IOException e) {
@@ -66,23 +66,23 @@ public class TextEditor extends JFrame {
         }
     }
 
-    File getFileObj(){
+    File getFileObj() {
         return this.file;
     }
 
-    void setFileObj(File fileName){
+    void setFileObj(File fileName) {
         this.file = fileName;
     }
 
     public TextEditor() {
         super("Text Editor");
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             setIconImage(ImageIO.read(new File("logo.png")));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         this.centerPanel = new CenterPanel(this);
         this.topPanel = new TopPanel(this);
         this.menuBar = new MenuBar(this);
@@ -90,7 +90,7 @@ public class TextEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
-        
+
         addChildComponents();
 
         setVisible(true);
