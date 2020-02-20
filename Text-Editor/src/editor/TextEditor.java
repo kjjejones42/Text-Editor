@@ -53,6 +53,9 @@ public class TextEditor extends JFrame {
     }
 
     void saveFile() {
+        if (file == null || !file.exists()) {
+            return;
+        }
         try {
             byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);            
             Path path = file.toPath();
@@ -89,7 +92,6 @@ public class TextEditor extends JFrame {
         addChildComponents();
 
         setVisible(true);
-        // centerPanel.requestFocusInWindow();
     }
 
     public static void main(final String[] args) {
