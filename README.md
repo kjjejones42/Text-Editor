@@ -6,25 +6,25 @@ In this stage, you will improve the usability of your text editor.
 
 The first thing to point out is that the "Save" and "Load" buttons take up a lot of space on the screen. You can't add a lot of buttons to the top bar when they contain text. This problem can be solved using icons instead of text.
 
-* The constructor of JButton can take an ImageIcon instead of text.
+* The constructor of `JButton` can take an `ImageIcon` instead of text.
 * You should replace the buttons "Load" and "Save" with corresponding icons. You can download the icons from the internet.
 
-It is also not useful to allow users to load a file from only one directory — the project folder. The Swing library has a useful component for navigating your filesystem - JFileChooser.
+It is also not useful to allow users to load a file from only one directory — the project folder. The Swing library has a useful component for navigating your filesystem - `JFileChooser`.
 
-* So, when the user clicks on the "Open" button (is was the button that previously named "Load") you should open a file manager using JFileChooser and let the user choose the file he wants to open.
-* Then, the contents of this file should be visible in the text editor. You can use [this link](http://www.mkyong.com/swing/java-swing-jfilechooser-example/) to see how to use JFileChooser.
+* So, when the user clicks on the "Open" button (is was the button that previously named "Load") you should open a file manager using `JFileChooser` and let the user choose the file he wants to open.
+* Then, the contents of this file should be visible in the text editor. You can use [this link](http://www.mkyong.com/swing/java-swing-jfilechooser-example/) to see how to use `JFileChooser`.
 
 Also, you should add a search panel.
 
 * It should contain a text field, a button "Start search", a button "Previous match" and a button "Next match.”
 * All of these buttons should also be icons.
 * The search can be by regular expressions or by plain text.
-* For this, you should add a checkbox that is checked when the user wants to search using a regular expression. You can use JCheckBox for this.
+* For this, you should add a checkbox that is checked when the user wants to search using a regular expression. You can use `JCheckBox` for this.
 * The search can slow down the GUI thread, so you should implement the search in a separate thread.
 
 After the user presses the "Start search" button, the program should select the first part of the text that is matched and set the caret to the end of the selected part.
 
-Use buttons "Next match" and "Previous match" to iterate through all matches in the text. 
+Use buttons "Next match" and "Previous match" to iterate through all matches in the text.
 
 You can use the following working code to set the caret position and select the text of the text area:
 
@@ -40,7 +40,7 @@ Due to testing reasons, you need to set name to some components.
 
 Set the names to these components:
 
-* JTextArea component to "TextArea"
+* `JTextArea` component to "TextArea"
 * Search field to "SearchField"
 * Button that saves the file to "SaveButton"
 * Button that opens a filemanager to "OpenButton"
@@ -48,8 +48,8 @@ Set the names to these components:
 * Previous match button to "PreviousMatchButton"
 * Next match button to "NextMatchButton"
 * Use regex checkbox to "UseRegExCheckbox"
-* JFileChooser to "FileChooser"
-* ScrollPane to "ScrollPane"
+* `JFileChooser` to "FileChooser"
+* `ScrollPane` to "ScrollPane"
 * File option in menu to "MenuFile"
 * Search option in menu to "MenuSearch"
 * Open option in menu to "MenuOpen"
@@ -59,7 +59,7 @@ Set the names to these components:
 * Previous match option in menu to "MenuPreviousMatch"
 * Next match option in menu to "MenuNextMatch"
 * Use regex option in menu to "MenuUseRegExp"
-* For the testing reasons, you should use a single instance of JFileChooser. Add this instance to the frame using add method. Hide this instance of JFileChooser if it isn't needed at the moment and show it when it needed.
+* For the testing reasons, you should use a single instance of `JFileChooser`. Add this instance to the frame using add method. Hide this instance of `JFileChooser` if it isn't needed at the moment and show it when it needed.
 
 Example
 Below is an example of how your text editor might look.
