@@ -12,11 +12,15 @@ public class TextEditor extends JFrame {
 
     static final boolean WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
 
-    CenterPanel centerPanel = new CenterPanel(this);
-    TopPanel topPanel = new TopPanel(this);
+    final CenterPanel centerPanel;
+    final TopPanel topPanel;
+    final MenuBar menuBar;
     File file;
 
-    private void addChildComponents(){             
+    private void addChildComponents(){        
+                
+        setJMenuBar(menuBar);
+
         setLayout(new GridBagLayout()); 
 
         GridBagConstraints c = new GridBagConstraints();
@@ -73,16 +77,19 @@ public class TextEditor extends JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        
+        this.centerPanel = new CenterPanel(this);
+        this.topPanel = new TopPanel(this);
+        this.menuBar = new MenuBar(this);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
         
-        setJMenuBar(new MenuBar(this));
         addChildComponents();
 
         setVisible(true);
-        centerPanel.requestFocusInWindow();
+        // centerPanel.requestFocusInWindow();
     }
 
     public static void main(final String[] args) {
