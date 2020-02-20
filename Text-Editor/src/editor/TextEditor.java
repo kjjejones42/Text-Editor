@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
+import javax.imageio.ImageIO;
 
 public class TextEditor extends JFrame {
 
@@ -76,7 +77,8 @@ public class TextEditor extends JFrame {
     public TextEditor() {
         super("Text Editor");
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());            
+            setIconImage(ImageIO.read(new File("logo.png")));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
