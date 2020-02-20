@@ -38,26 +38,26 @@ public class TextEditor extends JFrame {
     }
 
     void loadFile() {
-        String fileContent;
-        if (file == null || !file.exists()) {
-            fileContent = "";
-        } else {
-            try {
+        try {
+            String fileContent;
+            if (file == null || !file.exists()) {
+                fileContent = "";
+            } else {
                 byte[] bytes = Files.readAllBytes(file.toPath());
                 fileContent = new String(bytes, StandardCharsets.UTF_8);
                 // topPanel.setFilenameField(file.getAbsolutePath());
                 centerPanel.setText(fileContent);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     void saveFile() {
-        if (file == null || !file.exists()) {
-            return;
-        }
         try {
+            if (file == null || !file.exists()) {
+                return;
+            }
             byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
             Path path = file.toPath();
             Files.write(path, bytes);
