@@ -29,17 +29,20 @@ public class TextEditor extends JFrame {
 
         JMenuItem loadMenuItem = new JMenuItem("Load");
         loadMenuItem.setName("MenuLoad");
+        loadMenuItem.setIcon(UIManager.getIcon("FileView.directoryIcon"));
         loadMenuItem.addActionListener(e -> loadFile()); 
         fileMenu.add(loadMenuItem);
         
         JMenuItem saveMenuItem = new JMenuItem("Save");
+        saveMenuItem.setIcon(UIManager.getIcon("FileView.floppyDriveIcon"));
         saveMenuItem.setName("MenuSave");
         saveMenuItem.addActionListener(e -> saveFile()); 
         fileMenu.add(saveMenuItem);
 
         fileMenu.addSeparator();
 
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
+
+        JMenuItem exitMenuItem = new JMenuItem("Exit");        
         exitMenuItem.setName("MenuExit");
         exitMenuItem.addActionListener(e -> dispose());                
         fileMenu.add(exitMenuItem);
