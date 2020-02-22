@@ -35,7 +35,8 @@ class TopPanel extends JPanel {
     }
 
     private JButton createSelectButton() {
-        JButton selectButton = new JButton("Open");
+        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Open24.gif"));
+        JButton selectButton = new JButton(i);
 
         if (TextEditor.WINDOWS) {
             FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
@@ -55,7 +56,8 @@ class TopPanel extends JPanel {
     }
 
     private JButton createSaveButton() {
-        JButton saveButton = new JButton("Save");
+        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Save24.gif"));
+        JButton saveButton = new JButton(i);
         saveButton.setName("SaveButton");
         saveButton.addActionListener(e -> {
             editor.setFileObj(new File(searchField.getText()));
@@ -89,19 +91,22 @@ class TopPanel extends JPanel {
     }
 
     private JButton createStartSearchButton() {
-        JButton startSearchButton = new JButton("Search");
+        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Find24.gif"));
+        JButton startSearchButton = new JButton(i);
         startSearchButton.setName("StartSearchButton");
         return startSearchButton;
     }
 
     private JButton createPreviousMatchButton() {
-        JButton previousMatchButton = new JButton("Prev");
+        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Back24.gif"));
+        JButton previousMatchButton = new JButton(i);
         previousMatchButton.setName("PreviousMatchButton");
         return previousMatchButton;
     }
 
     private JButton createNextMatchButton() {
-        JButton nextMatchButton = new JButton("Next");
+        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Forward24.gif"));
+        JButton nextMatchButton = new JButton(i);
         nextMatchButton.setName("NextMatchButton");
         return nextMatchButton;
     }
@@ -114,19 +119,27 @@ class TopPanel extends JPanel {
 
     private void addChildComponents() {
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 0, 5);
-        c.fill = GridBagConstraints.BOTH;
+        GridBagConstraints defaultConstraints = new GridBagConstraints();
+        defaultConstraints.insets = new Insets(0, 5, 0, 5);
+        defaultConstraints.fill = GridBagConstraints.HORIZONTAL;        
+        defaultConstraints.weightx = 0.0;
 
-        add(openButton, c);
-        add(saveButton, c);
-        c.weightx = 1.0;
-        add(searchField, c);
-        c.weightx = 0;
-        add(startSearchButton);
-        add(previousMatchButton);
-        add(nextMatchButton);
-        add(useRegExCheckbox);
+        GridBagConstraints fillWidth = (GridBagConstraints) defaultConstraints.clone();        
+        fillWidth.weightx = 1.0;
+        
+        GridBagConstraints noLeftPadding = (GridBagConstraints) defaultConstraints.clone();       
+        noLeftPadding.insets = new Insets(0, 0, 0, 5);
+
+        GridBagConstraints noRightPadding = (GridBagConstraints) defaultConstraints.clone();  
+        noRightPadding.insets = new Insets(0, 5, 0, 0);
+
+        add(openButton, noRightPadding);
+        add(saveButton, noLeftPadding);
+        add(searchField, fillWidth);
+        add(startSearchButton, defaultConstraints);
+        add(previousMatchButton, noRightPadding);
+        add(nextMatchButton, noLeftPadding);
+        add(useRegExCheckbox, defaultConstraints);
 
     }
 
@@ -148,7 +161,7 @@ class TopPanel extends JPanel {
 
         addChildComponents();
 
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        setBorder(BorderFactory.createEmptyBorder(10, 5, 0, 5));
     }
 
 }
