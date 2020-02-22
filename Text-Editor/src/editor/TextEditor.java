@@ -31,7 +31,6 @@ public class TextEditor extends JFrame {
             } else {
                 byte[] bytes = Files.readAllBytes(file.toPath());
                 fileContent = new String(bytes, StandardCharsets.UTF_8);
-                // topPanel.setFilenameField(file.getAbsolutePath());
                 centerPanel.setText(fileContent);
             }
         } catch (IOException e) {
@@ -39,33 +38,33 @@ public class TextEditor extends JFrame {
         }
     }
 
-    void selectAndLoadFile(Component obj) {        
+    void selectAndLoadFile(Component obj) {      
+
         chooser.setVisible(true);
-        File file = null;
+        File chosenFile = null;
         if (chooser.showOpenDialog(obj) == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();        
+            chosenFile = chooser.getSelectedFile();        
         }         
         chooser.setVisible(false);       
-        if (file != null && file.exists()) {
-            setFileObj(file);  
+        if (chosenFile != null && chosenFile.exists()) {
+            setFileObj(chosenFile);  
             loadFile();
         }    
     }
 
-    void saveFile() {
+    void saveFile() {        
         try {
-            if (file == null) {
-                return;
+            if (file != null && file.isFile()) {
+                byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
+                Files.write(file.toPath(), bytes);
             }
-            byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
-            Files.write(file.toPath(), bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    void setFileObj(File fileName) {
-        this.file = fileName;
+    void setFileObj(File file) {        
+        this.file = file;
     }
 
     void startSearch() {

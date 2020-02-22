@@ -30,11 +30,7 @@ class TopPanel extends JPanel {
         JButton saveButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save24.gif")));
         saveButton.setName("SaveButton");
         saveButton.setToolTipText("Save File");
-
-        saveButton.addActionListener(e -> {
-            editor.setFileObj(new File(searchField.getText()));
-            editor.saveFile();
-        });
+        saveButton.addActionListener(e -> editor.saveFile());
         return saveButton;
     }
 
@@ -45,7 +41,7 @@ class TopPanel extends JPanel {
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
 
-            public void process() {
+            void process() {
                 editor.setSearchTerm(searchField.getText());
             }
 
