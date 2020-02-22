@@ -19,7 +19,7 @@ class MenuBar extends JMenuBar {
         loadMenuItem.setName("MenuLoad");        
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Open16.gif"));
         loadMenuItem.setIcon(i);
-        loadMenuItem.addActionListener(e -> editor.loadFile());
+        loadMenuItem.addActionListener(e -> editor.selectAndLoadFile(loadMenuItem));
         fileMenu.add(loadMenuItem);
 
         JMenuItem saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);

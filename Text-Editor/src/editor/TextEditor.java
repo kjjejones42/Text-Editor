@@ -16,7 +16,8 @@ public class TextEditor extends JFrame {
 
     final CenterPanel centerPanel;
     final TopPanel topPanel;
-    final MenuBar menuBar;
+    final MenuBar menuBar;    
+    final JFileChooser chooser;
     private String searchTerm;
     private boolean isRegex;
     private java.util.List<AbstractButton> registeredRegex = new ArrayList<>();
@@ -36,6 +37,19 @@ public class TextEditor extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void selectAndLoadFile(Component obj) {        
+        chooser.setVisible(true);
+        if (chooser.showOpenDialog(obj) == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();          
+            if (!file.exists()) {
+                return;
+            }
+            setFileObj(file);
+            loadFile();
+        }                
+        chooser.setVisible(false);
     }
 
     void saveFile() {
@@ -103,6 +117,9 @@ public class TextEditor extends JFrame {
         this.centerPanel = new CenterPanel(this);
         this.topPanel = new TopPanel(this);
         this.menuBar = new MenuBar(this);
+        this.chooser = new JFileChooser();        
+        this.chooser.setName("FileChooser");
+        this.chooser.setVisible(false);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);

@@ -17,39 +17,12 @@ class TopPanel extends JPanel {
     private final JButton previousMatchButton;
     private final JButton nextMatchButton;
     private final JCheckBox useRegExCheckbox;
-    private JFileChooser chooser;
-
-    private void processSelectButton(File file) {
-        if (!file.exists()) {
-            return;
-        }
-        editor.setFileObj(file);
-        editor.loadFile();
-    }
 
     private JButton createSelectButton() {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Open24.gif"));
         JButton selectButton = new JButton(i);
         selectButton.setToolTipText("Open File");
-
-        // if (TextEditor.WINDOWS) {
-        //     FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
-        //     selectButton.addActionListener(e -> {
-        //         chooser.setVisible(true);
-        //         processSelectButton(new File(chooser.getDirectory() + chooser.getFile()));
-        //     });
-        // } else {
-            chooser = new JFileChooser();
-            chooser.setName("FileChooser");
-            chooser.setVisible(false);
-            selectButton.addActionListener(e -> {
-                chooser.setVisible(true);
-                if (chooser.showOpenDialog(selectButton) == JFileChooser.APPROVE_OPTION) {
-                    processSelectButton(chooser.getSelectedFile());
-                }                
-                chooser.setVisible(false);
-            });
-        // }
+        selectButton.addActionListener(e -> editor.selectAndLoadFile(selectButton));
         return selectButton;
     }
 
