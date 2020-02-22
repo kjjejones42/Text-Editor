@@ -20,7 +20,7 @@ public class TextEditor extends JFrame {
     final JFileChooser chooser;
     private String searchTerm;
     private boolean isRegex;
-    private java.util.List<AbstractButton> registeredRegex = new ArrayList<>();
+    private java.util.List<AbstractButton> registeredRegexToggles = new ArrayList<>();
     File file;
 
     void loadFile() {
@@ -91,7 +91,7 @@ public class TextEditor extends JFrame {
     void toggleRegex() {
         System.out.println("toggleRegex");
         this.isRegex = !this.isRegex;
-        for (AbstractButton button : registeredRegex){
+        for (AbstractButton button : registeredRegexToggles){
             button.setSelected(this.isRegex);
         }
     }
@@ -102,7 +102,7 @@ public class TextEditor extends JFrame {
     }
 
     void registerRegexToggle(AbstractButton button){
-        registeredRegex.add(button);
+        registeredRegexToggles.add(button);
     }
 
     public TextEditor() {
@@ -124,7 +124,6 @@ public class TextEditor extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
-
         
         setJMenuBar(menuBar);
 
