@@ -9,11 +9,22 @@ class TopPanel extends JPanel {
 
     static final long serialVersionUID = 1;
 
-    private JTextField searchField;
     private final TextEditor editor;
-    private final JButton selectButton;
+    private final JButton openButton;
     private final JButton saveButton;
-    private final JButton loadButton;
+    private final JTextField searchField;
+    private final JButton startSearchButton;
+    private final JButton previousMatchButton;
+    private final JButton nextMatchButton;
+    private final JCheckBox useRegExCheckbox;
+
+    /**
+     * 
+     * Button that opens a filemanager to "OpenButton" Button that saves the file to
+     * "SaveButton" Search field to "SearchField" Start search button to
+     * "StartSearchButton" Previous match button to "PreviousMatchButton" Next match
+     * button to "NextMatchButton" Use regex checkbox to "UseRegExCheckbox"
+     */
 
     private void processSelectButton(File file) {
         if (!file.exists()) {
@@ -24,7 +35,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createSelectButton() {
-        JButton selectButton = new JButton("Choose File");
+        JButton selectButton = new JButton("Open");
 
         if (TextEditor.WINDOWS) {
             FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
@@ -53,17 +64,7 @@ class TopPanel extends JPanel {
         return saveButton;
     }
 
-    private JButton createLoadButton() {
-        JButton loadButton = new JButton("Load");
-        loadButton.setName("LoadButton");
-        loadButton.addActionListener(e -> {
-            editor.setFileObj(new File(searchField.getText()));
-            editor.loadFile();
-        });
-        return loadButton;
-    }
-
-    private JTextField createSearchField() {        
+    private JTextField createSearchField() {
         JTextField searchField = new JTextField("");
         searchField.setName("SearchField");
 
@@ -87,18 +88,45 @@ class TopPanel extends JPanel {
         return searchField;
     }
 
+    private JButton createStartSearchButton() {
+        JButton startSearchButton = new JButton("Search");
+        startSearchButton.setName("StartSearchButton");
+        return startSearchButton;
+    }
+
+    private JButton createPreviousMatchButton() {
+        JButton previousMatchButton = new JButton("Prev");
+        previousMatchButton.setName("PreviousMatchButton");
+        return previousMatchButton;
+    }
+
+    private JButton createNextMatchButton() {
+        JButton nextMatchButton = new JButton("Next");
+        nextMatchButton.setName("NextMatchButton");
+        return nextMatchButton;
+    }
+
+    private JCheckBox createUseRegExCheckbox() {
+        JCheckBox useRegExCheckbox = new JCheckBox("Use Regex");
+        useRegExCheckbox.setName("UseRegExCheckbox");
+        return useRegExCheckbox;
+    }
+
     private void addChildComponents() {
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 0, 5);
         c.fill = GridBagConstraints.BOTH;
 
-        add(selectButton, c);
+        add(openButton, c);
+        add(saveButton, c);
         c.weightx = 1.0;
         add(searchField, c);
-        c.weightx = 0.0;
-        add(saveButton, c);
-        add(loadButton, c);
+        c.weightx = 0;
+        add(startSearchButton);
+        add(previousMatchButton);
+        add(nextMatchButton);
+        add(useRegExCheckbox);
 
     }
 
@@ -110,10 +138,13 @@ class TopPanel extends JPanel {
         setLayout(new GridBagLayout());
 
         this.editor = editor;
-        this.selectButton = createSelectButton();
         this.saveButton = createSaveButton();
-        this.loadButton = createLoadButton();
+        this.openButton = createSelectButton();
         this.searchField = createSearchField();
+        this.startSearchButton = createStartSearchButton();
+        this.previousMatchButton = createPreviousMatchButton();
+        this.nextMatchButton = createNextMatchButton();
+        this.useRegExCheckbox = createUseRegExCheckbox();
 
         addChildComponents();
 
