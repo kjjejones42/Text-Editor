@@ -10,6 +10,7 @@ class TopPanel extends JPanel {
     static final long serialVersionUID = 1;
 
     private final TextEditor editor;
+
     private final JButton openButton;
     private final JButton saveButton;
     private final JTextField searchField;
@@ -19,16 +20,14 @@ class TopPanel extends JPanel {
     private final JCheckBox useRegExCheckbox;
 
     private JButton createSelectButton() {
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Open24.gif"));
-        JButton selectButton = new JButton(i);
+        JButton selectButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Open24.gif")));
         selectButton.setToolTipText("Open File");
         selectButton.addActionListener(e -> editor.selectAndLoadFile(selectButton));
         return selectButton;
     }
 
     private JButton createSaveButton() {
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save24.gif"));
-        JButton saveButton = new JButton(i);
+        JButton saveButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save24.gif")));
         saveButton.setName("SaveButton");
         saveButton.setToolTipText("Save File");
 
@@ -49,7 +48,7 @@ class TopPanel extends JPanel {
             public void process() {
                 editor.setSearchTerm(searchField.getText());
             }
-            
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 process();
@@ -69,8 +68,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createStartSearchButton() {
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Find24.gif"));
-        JButton startSearchButton = new JButton(i);
+        JButton startSearchButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Find24.gif")));
         startSearchButton.setName("StartSearchButton");
         startSearchButton.setToolTipText("Search");
         startSearchButton.addActionListener(e -> {
@@ -80,8 +78,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createPreviousMatchButton() {
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Back24.gif"));
-        JButton previousMatchButton = new JButton(i);
+        JButton previousMatchButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Back24.gif")));
         previousMatchButton.setName("PreviousMatchButton");
         previousMatchButton.setToolTipText("Previous Match");
         previousMatchButton.addActionListener(e -> {
@@ -91,8 +88,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createNextMatchButton() {
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Forward24.gif"));
-        JButton nextMatchButton = new JButton(i);
+        JButton nextMatchButton = new JButton(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Forward24.gif")));
         nextMatchButton.setName("NextMatchButton");
         nextMatchButton.setToolTipText("Next Match");
         nextMatchButton.addActionListener(e -> {

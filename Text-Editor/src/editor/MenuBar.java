@@ -16,15 +16,13 @@ class MenuBar extends JMenuBar {
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         JMenuItem loadMenuItem = new JMenuItem("Open", KeyEvent.VK_O);
-        loadMenuItem.setName("MenuLoad");        
-        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Open16.gif"));
-        loadMenuItem.setIcon(i);
+        loadMenuItem.setName("MenuLoad");       
+        loadMenuItem.setIcon(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Open16.gif")));
         loadMenuItem.addActionListener(e -> editor.selectAndLoadFile(loadMenuItem));
         fileMenu.add(loadMenuItem);
 
         JMenuItem saveMenuItem = new JMenuItem("Save", KeyEvent.VK_S);
-        Icon j = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save16.gif"));
-        saveMenuItem.setIcon(j);
+        saveMenuItem.setIcon(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save16.gif")));
         saveMenuItem.setName("MenuSave");
         saveMenuItem.addActionListener(e -> editor.saveFile());
         fileMenu.add(saveMenuItem);
@@ -46,23 +44,20 @@ class MenuBar extends JMenuBar {
         searchMenu.setName("MenuSearch");
         searchMenu.setMnemonic(KeyEvent.VK_S);
 
-        JMenuItem startMenuItem = new JMenuItem("Start search", KeyEvent.VK_S);        
-        Icon i1 = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Find16.gif"));
-        startMenuItem.setIcon(i1);
+        JMenuItem startMenuItem = new JMenuItem("Start search", KeyEvent.VK_S);     
+        startMenuItem.setIcon(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Find16.gif")));
         startMenuItem.setName("MenuStartSearch");
         startMenuItem.addActionListener(e -> editor.startSearch());
         searchMenu.add(startMenuItem);
 
-        JMenuItem prevMenuItem = new JMenuItem("Previous search", KeyEvent.VK_P);        
-        Icon i2 = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Back16.gif"));
-        prevMenuItem.setIcon(i2);
+        JMenuItem prevMenuItem = new JMenuItem("Previous search", KeyEvent.VK_P);   
+        prevMenuItem.setIcon(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Back16.gif")));
         prevMenuItem.setName("MenuPreviousMatch");        
         prevMenuItem.addActionListener(e -> editor.prevSearchTerm());
         searchMenu.add(prevMenuItem);
 
-        JMenuItem nextMenuItem = new JMenuItem("Next match", KeyEvent.VK_N);        
-        Icon i3 = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Forward16.gif"));
-        nextMenuItem.setIcon(i3);
+        JMenuItem nextMenuItem = new JMenuItem("Next match", KeyEvent.VK_N);   
+        nextMenuItem.setIcon(new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Forward16.gif")));
         nextMenuItem.setName("MenuNextMatch");
         nextMenuItem.addActionListener(e -> editor.nextSearchTerm());
         searchMenu.add(nextMenuItem);

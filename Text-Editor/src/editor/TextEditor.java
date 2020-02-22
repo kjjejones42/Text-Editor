@@ -20,8 +20,8 @@ public class TextEditor extends JFrame {
     final JFileChooser chooser;
     private String searchTerm;
     private boolean isRegex;
-    private java.util.List<AbstractButton> registeredRegexToggles = new ArrayList<>();
-    File file;
+    private final java.util.List<AbstractButton> registeredRegexToggles = new ArrayList<>();
+    private File file;
 
     void loadFile() {
         try {
@@ -41,15 +41,16 @@ public class TextEditor extends JFrame {
 
     void selectAndLoadFile(Component obj) {        
         chooser.setVisible(true);
+        File file = null;
         if (chooser.showOpenDialog(obj) == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();          
-            if (!file.exists()) {
-                return;
-            }
-            setFileObj(file);
-            loadFile();
-        }                
-        chooser.setVisible(false);
+            file = chooser.getSelectedFile();        
+        }         
+        chooser.setVisible(false);       
+        if (file == null || !file.exists()) {
+            return;
+        }
+        setFileObj(file);
+        loadFile();             
     }
 
     void saveFile() {
@@ -63,10 +64,6 @@ public class TextEditor extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    File getFileObj() {
-        return this.file;
     }
 
     void setFileObj(File fileName) {
@@ -119,14 +116,12 @@ public class TextEditor extends JFrame {
         this.menuBar = new MenuBar(this);
         this.chooser = new JFileChooser();        
         this.chooser.setName("FileChooser");
-        this.chooser.setVisible(false);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
         setLocationRelativeTo(null);
         
         setJMenuBar(menuBar);
-
         setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -139,7 +134,6 @@ public class TextEditor extends JFrame {
         c.gridy = 2;
         c.weighty = 1.0;
         add(centerPanel, c);
-
 
         setVisible(true);
     }
