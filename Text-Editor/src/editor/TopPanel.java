@@ -3,7 +3,6 @@ package editor;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.event.*;
-import java.io.*;
 
 class TopPanel extends JPanel {
 
