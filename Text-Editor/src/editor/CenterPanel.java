@@ -1,13 +1,14 @@
 package editor;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 
 class CenterPanel extends JPanel {
 
     static final long serialVersionUID = 1;
 
-    JTextArea textArea;
+    final JTextArea textArea;
 
     void setText(String text) {
         textArea.setText(text);
@@ -31,6 +32,29 @@ class CenterPanel extends JPanel {
         textArea.setName("TextArea");
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
+        textArea.getDocument().addDocumentListener(new DocumentListener(){
+
+            void process() {
+                editor.notifyTextHasChanged();
+            }
+        
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                process();                
+            }
+        
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                process();                
+                
+            }
+        
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                process();                
+                
+            }
+        });
         textAreaContainer.add(textArea, BorderLayout.CENTER);
 
         JScrollPane scrollPane = new JScrollPane(textAreaContainer);

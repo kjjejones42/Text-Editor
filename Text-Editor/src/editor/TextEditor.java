@@ -19,19 +19,33 @@ public class TextEditor extends JFrame {
     final MenuBar menuBar;    
     final JFileChooser chooser;
     private String searchTerm;
+    private String text;
+    private boolean hasTextChanged;
     private boolean isRegex;
     private final java.util.List<AbstractButton> registeredRegexToggles = new ArrayList<>();
     private File file;
 
+    private void updateText() {
+        this.text = centerPanel.getText();   
+        hasTextChanged = false;    
+    }
+
+    void notifyTextHasChanged() {
+        this.hasTextChanged = true;
+    }
+
+    void setText(String text){
+        this.text = text;
+    }
+
     void loadFile() {
         try {
-            String fileContent;
             if (file == null || !file.exists()) {
-                fileContent = "";
+                setText("");
             } else {
                 byte[] bytes = Files.readAllBytes(file.toPath());
-                fileContent = new String(bytes, StandardCharsets.UTF_8);
-                centerPanel.setText(fileContent);
+                setText(new String(bytes, StandardCharsets.UTF_8));
+                centerPanel.setText(text);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,17 +82,22 @@ public class TextEditor extends JFrame {
     }
 
     void startSearch() {
+        updateText();
         System.out.println("startSearch");
         // TODO
     }
 
     void prevSearchTerm() {
-        System.out.println("prevSearchTerm");
+        if (!hasTextChanged) {
+            System.out.println("prevSearchTerm");
+        }
         // TODO
     }
 
     void nextSearchTerm() {
-        System.out.println("nextSearchTerm");
+        if (!hasTextChanged) {
+            System.out.println("nextSearchTerm");
+        }
         // TODO
     }
 
