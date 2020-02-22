@@ -50,23 +50,28 @@ class MenuBar extends JMenuBar {
         Icon i1 = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Find16.gif"));
         startMenuItem.setIcon(i1);
         startMenuItem.setName("MenuStartSearch");
+        startMenuItem.addActionListener(e -> editor.startSearch());
         searchMenu.add(startMenuItem);
 
         JMenuItem prevMenuItem = new JMenuItem("Previous search", KeyEvent.VK_P);        
         Icon i2 = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Back16.gif"));
         prevMenuItem.setIcon(i2);
-        prevMenuItem.setName("MenuPreviousMatch");
+        prevMenuItem.setName("MenuPreviousMatch");        
+        prevMenuItem.addActionListener(e -> editor.prevSearchTerm());
         searchMenu.add(prevMenuItem);
 
         JMenuItem nextMenuItem = new JMenuItem("Next match", KeyEvent.VK_N);        
         Icon i3 = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Forward16.gif"));
         nextMenuItem.setIcon(i3);
         nextMenuItem.setName("MenuNextMatch");
+        nextMenuItem.addActionListener(e -> editor.nextSearchTerm());
         searchMenu.add(nextMenuItem);
 
         JCheckBoxMenuItem regexMenuItem = new JCheckBoxMenuItem("Use Regular Expressions");
         regexMenuItem.setMnemonic(KeyEvent.VK_R);
         regexMenuItem.setName("MenuUseRegExp");
+        regexMenuItem.addActionListener(e -> editor.toggleRegex());        
+        editor.registerRegexToggle(regexMenuItem);
         searchMenu.add(regexMenuItem);
 
         add(searchMenu);

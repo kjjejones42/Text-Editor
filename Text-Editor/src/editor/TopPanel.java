@@ -85,7 +85,7 @@ class TopPanel extends JPanel {
             }
 
             public void process() {
-                editor.setFileObj(new File(searchField.getText()));
+                editor.setSearchTerm(searchField.getText());
             }
         });
         return searchField;
@@ -96,7 +96,9 @@ class TopPanel extends JPanel {
         JButton startSearchButton = new JButton(i);
         startSearchButton.setName("StartSearchButton");
         startSearchButton.setToolTipText("Search");
-        // TODO - Implement Functionality
+        startSearchButton.addActionListener(e -> {
+            editor.startSearch();
+        });
         return startSearchButton;
     }
 
@@ -105,7 +107,9 @@ class TopPanel extends JPanel {
         JButton previousMatchButton = new JButton(i);
         previousMatchButton.setName("PreviousMatchButton");
         previousMatchButton.setToolTipText("Previous Match");
-        // TODO - Implement Functionality
+        previousMatchButton.addActionListener(e -> {
+            editor.prevSearchTerm();
+        });
         return previousMatchButton;
     }
 
@@ -114,14 +118,17 @@ class TopPanel extends JPanel {
         JButton nextMatchButton = new JButton(i);
         nextMatchButton.setName("NextMatchButton");
         nextMatchButton.setToolTipText("Next Match");
-        // TODO - Implement Functionality
+        nextMatchButton.addActionListener(e -> {
+            editor.nextSearchTerm();
+        });
         return nextMatchButton;
     }
 
     private JCheckBox createUseRegExCheckbox() {
         JCheckBox useRegExCheckbox = new JCheckBox("Use Regex");
         useRegExCheckbox.setName("UseRegExCheckbox");
-        // TODO - Implement Functionality
+        useRegExCheckbox.addActionListener(e -> editor.toggleRegex());
+        editor.registerRegexToggle(useRegExCheckbox);
         return useRegExCheckbox;
     }
 

@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
 import javax.imageio.ImageIO;
+import java.util.*;
 
 public class TextEditor extends JFrame {
 
@@ -16,26 +17,10 @@ public class TextEditor extends JFrame {
     final CenterPanel centerPanel;
     final TopPanel topPanel;
     final MenuBar menuBar;
+    private String searchTerm;
+    private boolean isRegex;
+    private java.util.List<AbstractButton> registeredRegex = new ArrayList<>();
     File file;
-
-    private void addChildComponents() {
-
-        setJMenuBar(menuBar);
-
-        setLayout(new GridBagLayout());
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.weightx = 1.0;
-        c.gridy = 1;
-        add(topPanel, c);
-
-        c.gridy = 2;
-        c.weighty = 1.0;
-        add(centerPanel, c);
-
-    }
 
     void loadFile() {
         try {
@@ -74,6 +59,38 @@ public class TextEditor extends JFrame {
         this.file = fileName;
     }
 
+    void startSearch() {
+        System.out.println("startSearch");
+        // TODO
+    }
+
+    void prevSearchTerm() {
+        System.out.println("prevSearchTerm");
+        // TODO
+    }
+
+    void nextSearchTerm() {
+        System.out.println("nextSearchTerm");
+        // TODO
+    }
+
+    void toggleRegex() {
+        System.out.println("toggleRegex");
+        this.isRegex = !this.isRegex;
+        for (AbstractButton button : registeredRegex){
+            button.setSelected(this.isRegex);
+        }
+    }
+
+    void setSearchTerm(String searchTerm) {
+        System.out.println("searchTerm \"" + searchTerm +"\"");
+        this.searchTerm = searchTerm;
+    }
+
+    void registerRegexToggle(AbstractButton button){
+        registeredRegex.add(button);
+    }
+
     public TextEditor() {
         super("Text Editor");
         try {
@@ -91,7 +108,22 @@ public class TextEditor extends JFrame {
         setSize(600, 480);
         setLocationRelativeTo(null);
 
-        addChildComponents();
+        
+        setJMenuBar(menuBar);
+
+        setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        c.gridy = 1;
+        add(topPanel, c);
+
+        c.gridy = 2;
+        c.weighty = 1.0;
+        add(centerPanel, c);
+
 
         setVisible(true);
     }
