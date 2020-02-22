@@ -18,14 +18,6 @@ class TopPanel extends JPanel {
     private final JButton nextMatchButton;
     private final JCheckBox useRegExCheckbox;
 
-    /**
-     * 
-     * Button that opens a filemanager to "OpenButton" Button that saves the file to
-     * "SaveButton" Search field to "SearchField" Start search button to
-     * "StartSearchButton" Previous match button to "PreviousMatchButton" Next match
-     * button to "NextMatchButton" Use regex checkbox to "UseRegExCheckbox"
-     */
-
     private void processSelectButton(File file) {
         if (!file.exists()) {
             return;
@@ -37,6 +29,7 @@ class TopPanel extends JPanel {
     private JButton createSelectButton() {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Open24.gif"));
         JButton selectButton = new JButton(i);
+        selectButton.setToolTipText("Open File");
 
         if (TextEditor.WINDOWS) {
             FileDialog chooser = new java.awt.FileDialog((java.awt.Frame) null, "Open", FileDialog.LOAD);
@@ -59,6 +52,8 @@ class TopPanel extends JPanel {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Save24.gif"));
         JButton saveButton = new JButton(i);
         saveButton.setName("SaveButton");
+        saveButton.setToolTipText("Save File");
+
         saveButton.addActionListener(e -> {
             editor.setFileObj(new File(searchField.getText()));
             editor.saveFile();
@@ -69,6 +64,7 @@ class TopPanel extends JPanel {
     private JTextField createSearchField() {
         JTextField searchField = new JTextField("");
         searchField.setName("SearchField");
+        searchField.setToolTipText("Search Term");
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -94,6 +90,8 @@ class TopPanel extends JPanel {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Find24.gif"));
         JButton startSearchButton = new JButton(i);
         startSearchButton.setName("StartSearchButton");
+        startSearchButton.setToolTipText("Search");
+        // TODO - Implement Functionality
         return startSearchButton;
     }
 
@@ -101,6 +99,8 @@ class TopPanel extends JPanel {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Back24.gif"));
         JButton previousMatchButton = new JButton(i);
         previousMatchButton.setName("PreviousMatchButton");
+        previousMatchButton.setToolTipText("Previous Match");
+        // TODO - Implement Functionality
         return previousMatchButton;
     }
 
@@ -108,29 +108,33 @@ class TopPanel extends JPanel {
         Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Forward24.gif"));
         JButton nextMatchButton = new JButton(i);
         nextMatchButton.setName("NextMatchButton");
+        nextMatchButton.setToolTipText("Next Match");
+        // TODO - Implement Functionality
         return nextMatchButton;
     }
 
     private JCheckBox createUseRegExCheckbox() {
         JCheckBox useRegExCheckbox = new JCheckBox("Use Regex");
         useRegExCheckbox.setName("UseRegExCheckbox");
+        // TODO - Implement Functionality
         return useRegExCheckbox;
     }
 
     private void addChildComponents() {
+        setLayout(new GridBagLayout());
 
         GridBagConstraints defaultConstraints = new GridBagConstraints();
         defaultConstraints.insets = new Insets(0, 5, 0, 5);
-        defaultConstraints.fill = GridBagConstraints.HORIZONTAL;        
+        defaultConstraints.fill = GridBagConstraints.HORIZONTAL;
         defaultConstraints.weightx = 0.0;
 
-        GridBagConstraints fillWidth = (GridBagConstraints) defaultConstraints.clone();        
+        GridBagConstraints fillWidth = (GridBagConstraints) defaultConstraints.clone();
         fillWidth.weightx = 1.0;
-        
-        GridBagConstraints noLeftPadding = (GridBagConstraints) defaultConstraints.clone();       
+
+        GridBagConstraints noLeftPadding = (GridBagConstraints) defaultConstraints.clone();
         noLeftPadding.insets = new Insets(0, 0, 0, 5);
 
-        GridBagConstraints noRightPadding = (GridBagConstraints) defaultConstraints.clone();  
+        GridBagConstraints noRightPadding = (GridBagConstraints) defaultConstraints.clone();
         noRightPadding.insets = new Insets(0, 5, 0, 0);
 
         add(openButton, noRightPadding);
@@ -148,7 +152,6 @@ class TopPanel extends JPanel {
     }
 
     TopPanel(TextEditor editor) {
-        setLayout(new GridBagLayout());
 
         this.editor = editor;
         this.saveButton = createSaveButton();
