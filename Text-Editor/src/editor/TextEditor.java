@@ -109,7 +109,7 @@ public class TextEditor extends JFrame {
         super("Text Editor");
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            setIconImage(ImageIO.read(new File("logo.png")));
+            setIconImage(ImageIO.read(getClass().getResource("/toolbarButtonGraphics/general/History24.gif")));        
         } catch (Exception ex) {
             ex.printStackTrace();
         }

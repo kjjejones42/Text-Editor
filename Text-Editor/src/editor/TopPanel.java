@@ -19,7 +19,7 @@ class TopPanel extends JPanel {
     private final JCheckBox useRegExCheckbox;
 
     private JButton createSelectButton() {
-        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Open24.gif"));
+        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Open24.gif"));
         JButton selectButton = new JButton(i);
         selectButton.setToolTipText("Open File");
         selectButton.addActionListener(e -> editor.selectAndLoadFile(selectButton));
@@ -27,7 +27,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createSaveButton() {
-        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Save24.gif"));
+        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Save24.gif"));
         JButton saveButton = new JButton(i);
         saveButton.setName("SaveButton");
         saveButton.setToolTipText("Save File");
@@ -65,7 +65,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createStartSearchButton() {
-        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/general/Find24.gif"));
+        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/general/Find24.gif"));
         JButton startSearchButton = new JButton(i);
         startSearchButton.setName("StartSearchButton");
         startSearchButton.setToolTipText("Search");
@@ -76,7 +76,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createPreviousMatchButton() {
-        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Back24.gif"));
+        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Back24.gif"));
         JButton previousMatchButton = new JButton(i);
         previousMatchButton.setName("PreviousMatchButton");
         previousMatchButton.setToolTipText("Previous Match");
@@ -87,7 +87,7 @@ class TopPanel extends JPanel {
     }
 
     private JButton createNextMatchButton() {
-        Icon i = new ImageIcon(TextEditor.class.getResource("/toolbarButtonGraphics/navigation/Forward24.gif"));
+        Icon i = new ImageIcon(getClass().getResource("/toolbarButtonGraphics/navigation/Forward24.gif"));
         JButton nextMatchButton = new JButton(i);
         nextMatchButton.setName("NextMatchButton");
         nextMatchButton.setToolTipText("Next Match");
