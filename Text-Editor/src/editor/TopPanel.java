@@ -45,20 +45,24 @@ class TopPanel extends JPanel {
         searchField.setToolTipText("Search Term");
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                process();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                process();
-            }
-
-            public void insertUpdate(DocumentEvent e) {
-                process();
-            }
 
             public void process() {
                 editor.setSearchTerm(searchField.getText());
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                process();
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                process();
+            }
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                process();
             }
         });
         return searchField;
