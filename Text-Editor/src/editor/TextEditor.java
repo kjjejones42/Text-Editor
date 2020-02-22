@@ -54,12 +54,11 @@ public class TextEditor extends JFrame {
 
     void saveFile() {
         try {
-            if (file == null || !file.exists()) {
+            if (file == null) {
                 return;
             }
             byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
-            Path path = file.toPath();
-            Files.write(path, bytes);
+            Files.write(file.toPath(), bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
