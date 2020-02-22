@@ -132,10 +132,6 @@ class TopPanel extends JPanel {
 
     }
 
-    void setSearchField(String text) {
-        searchField.setText(text);
-    }
-
     TopPanel(TextEditor editor) {
 
         this.editor = editor;

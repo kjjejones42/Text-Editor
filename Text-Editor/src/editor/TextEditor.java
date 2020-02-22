@@ -46,11 +46,10 @@ public class TextEditor extends JFrame {
             file = chooser.getSelectedFile();        
         }         
         chooser.setVisible(false);       
-        if (file == null || !file.exists()) {
-            return;
-        }
-        setFileObj(file);
-        loadFile();             
+        if (file != null && file.exists()) {
+            setFileObj(file);  
+            loadFile();
+        }    
     }
 
     void saveFile() {
@@ -128,10 +127,8 @@ public class TextEditor extends JFrame {
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.weightx = 1.0;
-        c.gridy = 1;
         add(topPanel, c);
 
-        c.gridy = 2;
         c.weighty = 1.0;
         add(centerPanel, c);
 
