@@ -24,8 +24,10 @@ public class TextEditor extends JFrame {
     private boolean isRegex;
     private final java.util.List<AbstractButton> registeredRegexToggles = new ArrayList<>();
     private File file;
+    private java.util.List<Searcher.SearchResult> searchResults;
+    private final Searcher searcher;
 
-    private void updateText() {
+    private void updateTextField() {
         this.text = centerPanel.getText();   
         hasTextChanged = false;    
     }
@@ -82,8 +84,10 @@ public class TextEditor extends JFrame {
     }
 
     void startSearch() {
-        updateText();
+        updateTextField();
         System.out.println("startSearch");
+        this.searchResults = isRegex ? searcher.regexSearch(text, searchTerm) : searcher.stringSearch(text, searchTerm);
+        System.out.println(this.searchResults);
         // TODO
     }
 
@@ -132,6 +136,7 @@ public class TextEditor extends JFrame {
         this.menuBar = new MenuBar(this);
         this.chooser = new JFileChooser();        
         this.chooser.setName("FileChooser");
+        this.searcher = new Searcher();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 480);
