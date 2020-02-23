@@ -2,9 +2,11 @@ package editor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.*;
-import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import javax.imageio.ImageIO;
 import java.util.*;
 
@@ -34,6 +36,9 @@ public class TextEditor extends JFrame {
     }
 
     private void selectSearchResult() {  
+        if (searchResults.isEmpty()){
+            return;
+        }
         int max = searchResults.size() - 1; 
         if (this.searchIndex < 0) {
             this.searchIndex = max;
@@ -52,17 +57,28 @@ public class TextEditor extends JFrame {
     }
 
     void loadFile() {
-        try {
-            if (file == null || !file.exists()) {
-                setText("");
-            } else {
-                byte[] bytes = Files.readAllBytes(file.toPath());
-                setText(new String(bytes, StandardCharsets.UTF_8));
-                centerPanel.setText(text);
+        new SwingWorker<String,Object>() {
+            @Override
+            protected String doInBackground() throws Exception {
+                if (file == null || !file.exists()) {
+                    return "";
+                } else {
+                    byte[] bytes = Files.readAllBytes(file.toPath());
+                    return new String(bytes, StandardCharsets.ISO_8859_1);
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            @Override
+            protected void done() {
+                String text;
+                try {
+                    text = get();                                
+                } catch (Exception e) {
+                    text = "";
+                } 
+                setText(text);
+                centerPanel.setText(text);  
+            }
+        }.execute();
     }
 
     void selectAndLoadFile(Component obj) {      
@@ -82,7 +98,7 @@ public class TextEditor extends JFrame {
     void saveFile() {        
         try {
             if (file != null && file.isFile()) {
-                byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.UTF_8);
+                byte[] bytes = centerPanel.getText().getBytes(StandardCharsets.ISO_8859_1);
                 Files.write(file.toPath(), bytes);
             }
         } catch (IOException e) {
@@ -95,10 +111,44 @@ public class TextEditor extends JFrame {
     }
 
     void startSearch() {
-        updateTextField();
-        this.searchResults = isRegex ? searcher.regexSearch(text, searchTerm) : searcher.stringSearch(text, searchTerm);
-        this.searchIndex = 0;
+        SwingWorker<java.util.List<Searcher.SearchResult>, Object> worker = new SwingWorker<java.util.List<Searcher.SearchResult>, Object>() {
+            @Override
+            protected java.util.List<Searcher.SearchResult> doInBackground() throws Exception {                
+                updateTextField();
+                return isRegex ? searcher.regexSearch(text, searchTerm) : searcher.stringSearch(text, searchTerm);
+            }
+        };            
+        JWindow window = new JWindow(this);   
+        window.setVisible(false);
+        window.setLocationRelativeTo(this);         
+        window.setContentPane(new JLabel("Searching..."));
+        window.pack();
+        worker.addPropertyChangeListener(new PropertyChangeListener(){           
+            public void propertyChange(PropertyChangeEvent event) {
+                if ("state".equals(event.getPropertyName())
+                        && SwingWorker.StateValue.DONE == event.getNewValue()) {                             
+                    window.setVisible(false);
+                    window.dispose();
+                }
+            }
+        });
+        worker.execute();
+        window.setVisible(true);
+        try {   
+            this.searchResults = worker.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setSearchIndex(0);
         selectSearchResult();
+    }
+
+    void setSearchResults(java.util.List<Searcher.SearchResult> searchResults){
+        this.searchResults = searchResults;
+    }
+
+    void setSearchIndex(int searchIndex) {
+        this.searchIndex = searchIndex;
     }
 
     void prevSearchTerm() {
