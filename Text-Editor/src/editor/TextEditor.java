@@ -26,10 +26,21 @@ public class TextEditor extends JFrame {
     private File file;
     private java.util.List<Searcher.SearchResult> searchResults;
     private final Searcher searcher;
+    private int searchIndex;
 
     private void updateTextField() {
         this.text = centerPanel.getText();   
         hasTextChanged = false;    
+    }
+
+    private void selectSearchResult() {  
+        int max = searchResults.size() - 1; 
+        if (this.searchIndex < 0) {
+            this.searchIndex = max;
+        } else if (this.searchIndex > max) {
+            this.searchIndex = 0;
+        }
+        centerPanel.selectSearchResult(searchResults.get(searchIndex));
     }
 
     void notifyTextHasChanged() {
@@ -85,28 +96,30 @@ public class TextEditor extends JFrame {
 
     void startSearch() {
         updateTextField();
-        System.out.println("startSearch");
         this.searchResults = isRegex ? searcher.regexSearch(text, searchTerm) : searcher.stringSearch(text, searchTerm);
-        System.out.println(this.searchResults);
-        // TODO
+        this.searchIndex = 0;
+        selectSearchResult();
     }
 
     void prevSearchTerm() {
-        if (!hasTextChanged) {
-            System.out.println("prevSearchTerm");
+        if (hasTextChanged) {
+            startSearch();
+        } else {
+            this.searchIndex--;
+            selectSearchResult();
         }
-        // TODO
     }
 
     void nextSearchTerm() {
-        if (!hasTextChanged) {
-            System.out.println("nextSearchTerm");
+        if (hasTextChanged) {
+            startSearch();
+        } else {
+            this.searchIndex++;            
+            selectSearchResult();
         }
-        // TODO
     }
 
     void toggleRegex() {
-        System.out.println("toggleRegex");
         this.isRegex = !this.isRegex;
         for (AbstractButton button : registeredRegexToggles){
             button.setSelected(this.isRegex);
@@ -114,7 +127,6 @@ public class TextEditor extends JFrame {
     }
 
     void setSearchTerm(String searchTerm) {
-        System.out.println("searchTerm \"" + searchTerm +"\"");
         this.searchTerm = searchTerm;
     }
 

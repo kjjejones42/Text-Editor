@@ -18,6 +18,14 @@ class CenterPanel extends JPanel {
         return textArea.getText();
     }
 
+    void selectSearchResult(Searcher.SearchResult result) {      
+        int start = result.startInclusive;
+        int end = result.endExclusive;  
+        textArea.setCaretPosition(end);
+        textArea.select(start, end);
+        textArea.grabFocus();
+    }
+
     CenterPanel(TextEditor editor) {
 
         setLayout(new BorderLayout());
