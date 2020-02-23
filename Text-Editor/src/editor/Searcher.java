@@ -84,10 +84,13 @@ class Searcher {
 
     public List<SearchResult> regexSearch(String input, String searchTerm){
         List<SearchResult> allMatches = new ArrayList<>();
-        Matcher m = Pattern.compile(searchTerm).matcher(input);
-        while (m.find()) {
-          allMatches.add(new SearchResult(m.start(), m.end()));
-        }        
-        return allMatches;
+        try {
+            Matcher m = Pattern.compile(searchTerm).matcher(input);
+            while (m.find()) {
+              allMatches.add(new SearchResult(m.start(), m.end()));
+            }                    
+        } finally {
+            return allMatches;            
+        }
     }
 }
